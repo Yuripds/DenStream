@@ -9,7 +9,7 @@ from sklearn.cluster import DBSCAN
 
 class DenStream:
 
-    def __init__(self, lambd=1, eps=1, beta=2, mu=2):
+    def __init__(self, lambd=1, eps=1, beta=2, mu=2,eps_dbscan=0.3,min_samples_dbscan=3):
         """
         DenStream - Density-Based Clustering over an Evolving Data Stream with
         Noise.
@@ -40,6 +40,8 @@ class DenStream:
         """
         self.lambd = lambd
         self.eps = eps
+        self.eps_dbscan = eps_dbscan
+        self.min_samples_dbscan = min_samples_dbscan
         self.beta = beta
         self.mu = mu
         self.t = 0
@@ -127,7 +129,7 @@ class DenStream:
                                             self.p_micro_clusters])
         p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
                                    self.p_micro_clusters]
-        dbscan = DBSCAN(eps=5, algorithm='brute')
+        dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
         dbscan.fit(p_micro_cluster_centers,
                    sample_weight=p_micro_cluster_weights)
 
