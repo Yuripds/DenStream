@@ -88,61 +88,6 @@ class DenStream:
             self._partial_fit(sample, weight)
         return self
 
-    def fit_predict(self, X, y=None, sample_weight=None):
-        """
-        Lorem ipsum dolor sit amet
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix}, shape (n_samples, n_features)
-            Subset of training data
-
-        y : Ignored
-
-        sample_weight : array-like, shape (n_samples,), optional
-            Weights applied to individual samples.
-            If not provided, uniform weights are assumed.
-
-        Returns
-        -------
-        y : ndarray, shape (n_samples,)
-            Cluster labels
-        """
-
-        X = check_array(X, dtype=np.float64, order="C")
-
-        n_samples, _ = X.shape
-
-        sample_weight = self._validate_sample_weight(sample_weight, n_samples)
-
-        # if not hasattr(self, "potential_micro_clusters"):
-
-        # if n_features != :
-        # raise ValueError("Number of features %d does not match previous "
-        # "data %d." % (n_features, self.coef_.shape[-1]))
-
-        for sample, weight in zip(X, sample_weight):
-            self._partial_fit(sample, weight)
-        
-        p_micro_cluster_centers = np.array([p_micro_cluster.center() for
-                                            p_micro_cluster in
-                                            self.p_micro_clusters])
-        p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
-                                   self.p_micro_clusters]
-        dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
-        dbscan.fit(p_micro_cluster_centers,
-                   sample_weight=p_micro_cluster_weights)
-
-        y = []
-        for sample in X:
-            index, _ = self._get_nearest_micro_cluster(sample,
-                                                       self.p_micro_clusters)
-            y.append(dbscan.labels_[index])
-
-        return y
-
-
-
     def _addUsers(self, X, y=None,y_old=None,usuarioFinal=50,qtd_users_Add=10, sample_weight=None):
             """
             Parameter
@@ -212,6 +157,59 @@ class DenStream:
 
             
             return y,y_old
+            
+    def fit_predict(self, X, y=None, sample_weight=None):
+        """
+        Lorem ipsum dolor sit amet
+
+        Parameters
+        ----------
+        X : {array-like, sparse matrix}, shape (n_samples, n_features)
+            Subset of training data
+
+        y : Ignored
+
+        sample_weight : array-like, shape (n_samples,), optional
+            Weights applied to individual samples.
+            If not provided, uniform weights are assumed.
+
+        Returns
+        -------
+        y : ndarray, shape (n_samples,)
+            Cluster labels
+        """
+
+        X = check_array(X, dtype=np.float64, order="C")
+
+        n_samples, _ = X.shape
+
+        sample_weight = self._validate_sample_weight(sample_weight, n_samples)
+
+        # if not hasattr(self, "potential_micro_clusters"):
+
+        # if n_features != :
+        # raise ValueError("Number of features %d does not match previous "
+        # "data %d." % (n_features, self.coef_.shape[-1]))
+
+        for sample, weight in zip(X, sample_weight):
+            self._partial_fit(sample, weight)
+        
+        p_micro_cluster_centers = np.array([p_micro_cluster.center() for
+                                            p_micro_cluster in
+                                            self.p_micro_clusters])
+        p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
+                                   self.p_micro_clusters]
+        dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
+        dbscan.fit(p_micro_cluster_centers,
+                   sample_weight=p_micro_cluster_weights)
+
+        y = []
+        for sample in X:
+            index, _ = self._get_nearest_micro_cluster(sample,
+                                                       self.p_micro_clusters)
+            y.append(dbscan.labels_[index])
+
+        return y
 
     def _get_nearest_micro_cluster(self, sample, micro_clusters):
         smallest_distance = sys.float_info.max
