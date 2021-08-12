@@ -157,8 +157,8 @@ class DenStream:
 
             
             return y,y_old
-
-    def fit_new(self, X, y=None, sample_weight=None):
+            
+    def fit_predict(self, X, y=None, sample_weight=None):
         """
         Lorem ipsum dolor sit amet
 
