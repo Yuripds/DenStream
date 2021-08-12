@@ -215,6 +215,74 @@ class DenStream:
         return sample_weight
 
 
+    def fit_add_time(self, entrada,usuarioFinal,qtd_users_Add, sample_weight=None):
+        """
+        Parameter
+        ----------
+        X : {array-like, sparse matrix}, shape (n_samples, n_features)
+            Subset of training data
+
+        """
+    
+        X=entrada[0:usuarioFinal]
+
+        X = check_array(X, dtype=np.float64, order="C")
+
+        n_samples, _ = X.shape
+
+        sample_weight = self._validate_sample_weight(sample_weight, n_samples)
+
+        # if not hasattr(self, "potential_micro_clusters"):
+
+        # if n_features != :
+        # raise ValueError("Number of features %d does not match previous "
+        # "data %d." % (n_features, self.coef_.shape[-1]))
+
+        for sample, weight in zip(X, sample_weight):
+            self._partial_fit(sample, weight)
+            
+        p_micro_cluster_centers = np.array([p_micro_cluster.center() for
+                                                p_micro_cluster in
+                                                self.p_micro_clusters])
+        p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
+                                    self.p_micro_clusters]
+        dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
+        dbscan.fit(p_micro_cluster_centers,
+                    sample_weight=p_micro_cluster_weights)
+
+        y_old = []
+        for sample in X:
+            index, _ = self._get_nearest_micro_cluster(sample,
+                                                        self.p_micro_clusters)
+        y_old.append(dbscan.labels_[index])
+
+
+        ### add novos usuários
+        y=[]
+        usuarios_add = 0
+        while (usuarios_add<=qtd_users_Add):
+            nova_amostra = entrada[0+usuarioFinal:usuarioFinal+1]
+            self._partial_fit(nova_amostra, np.ones(1, dtype=np.float64, order='C'))
+
+            p_micro_cluster_centers = np.array([p_micro_cluster.center() for
+                                                p_micro_cluster in
+                                                self.p_micro_clusters])
+            p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
+                                        self.p_micro_clusters]
+            dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
+            dbscan.fit(p_micro_cluster_centers,
+                        sample_weight=p_micro_cluster_weights)
+            
+            index, _ = self._get_nearest_micro_cluster(nova_amostra,self.p_micro_clusters)
+
+            y.append(dbscan.labels_[index])
+
+            usuarioFinal=usuarioFinal+1
+            usuarios_add=usuarios_add+1
+
+
+        
+        return y,y_old
 # data = np.random.random([1000, 5]) * 500
 # clusterer = DenStream(lambd=0.1, eps=100, beta=0.5, mu=3)
 # #for row in data[:100]:
