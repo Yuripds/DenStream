@@ -52,13 +52,6 @@ class DenStream:
         else:
             self.tp = sys.maxsize
 
-
-
-
-
-
-
-
     def partial_fit(self, X, y=None, sample_weight=None):
         """
         Online learning.
@@ -150,7 +143,7 @@ class DenStream:
 
 
 
-    def fit_add_time(self, X,usuarioFinal,qtd_users_Add, sample_weight=None):
+    def fit_add_time(self, X, y=None,y_old=None,usuarioFinal=50,qtd_users_Add=10, sample_weight=None):
             """
             Parameter
             ----------
