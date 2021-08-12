@@ -143,7 +143,7 @@ class DenStream:
 
 
 
-    def fit_add_time(self, X, y=None,y_old=None,usuarioFinal=50,qtd_users_Add=10, sample_weight=None):
+    def _addUsers(self, X, y=None,y_old=None,usuarioFinal=50,qtd_users_Add=10, sample_weight=None):
             """
             Parameter
             ----------
