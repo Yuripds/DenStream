@@ -150,7 +150,7 @@ class DenStream:
 
 
 
-    def fit_add_time(self, entrada,usuarioFinal,qtd_users_Add, sample_weight=None):
+    def fit_add_time(self, X,usuarioFinal,qtd_users_Add, sample_weight=None):
             """
             Parameter
             ----------
@@ -158,8 +158,9 @@ class DenStream:
                 Subset of training data
 
             """
-        
-            X=entrada[0:usuarioFinal]
+            X_part = X
+
+            X=X_part[0:usuarioFinal]
 
             X = check_array(X, dtype=np.float64, order="C")
 
@@ -196,7 +197,7 @@ class DenStream:
             y=[]
             usuarios_add = 0
             while (usuarios_add<=qtd_users_Add):
-                nova_amostra = entrada[0+usuarioFinal:usuarioFinal+1]
+                nova_amostra = X_part[0+usuarioFinal:usuarioFinal+1]
                 self._partial_fit(nova_amostra, np.ones(1, dtype=np.float64, order='C'))
 
                 p_micro_cluster_centers = np.array([p_micro_cluster.center() for
