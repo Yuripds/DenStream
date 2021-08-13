@@ -114,6 +114,8 @@ class DenStream:
 
             for sample, weight in zip(X, sample_weight):
                 self._partial_fit(sample, weight)
+                print("sample: ", sample)
+                print("weight: ",weight)
                 
             p_micro_cluster_centers = np.array([p_micro_cluster.center() for
                                                     p_micro_cluster in
@@ -137,6 +139,9 @@ class DenStream:
             while (usuarios_add<=qtd_users_Add):
                 nova_amostra = X_part[0+usuarioFinal:usuarioFinal+1]
                 new_sample_weight = np.transpose(np.ones(1, dtype=np.float64, order='C'))
+                
+                print("sample2: ", nova_amostra)
+                print("weight2: ",new_sample_weight)
                 self._partial_fit(nova_amostra, new_sample_weight)
 
                 p_micro_cluster_centers = np.array([p_micro_cluster.center() for
