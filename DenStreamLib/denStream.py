@@ -136,7 +136,8 @@ class DenStream:
             usuarios_add = 0
             while (usuarios_add<=qtd_users_Add):
                 nova_amostra = X_part[0+usuarioFinal:usuarioFinal+1]
-                self._partial_fit(nova_amostra, np.ones(1, dtype=np.float64, order='C'))
+                new_sample_weight = np.transpose(np.ones(1, dtype=np.float64, order='C'))
+                self._partial_fit(nova_amostra, new_sample_weight)
 
                 p_micro_cluster_centers = np.array([p_micro_cluster.center() for
                                                     p_micro_cluster in
