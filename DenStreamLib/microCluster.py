@@ -11,6 +11,8 @@ class MicroCluster:
         self.creation_time = creation_time
 
     def insert_sample(self, sample, weight):
+        print("sample: ", sample)
+        print("weight: ",weight)
         if self.sum_of_weights != 0:
             # Update sum of weights
             old_sum_of_weights = self.sum_of_weights
