@@ -89,6 +89,7 @@ class DenStream:
         return self
 
     def _addUsers(self, X, y=None,y_old=None,usuarioFinal=50,qtd_users_Add=10, sample_weight=None):
+            print("porra, imprima isso!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
             """
             Parameter
             ----------
