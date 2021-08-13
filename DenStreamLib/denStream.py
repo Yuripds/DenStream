@@ -113,9 +113,10 @@ class DenStream:
             # "data %d." % (n_features, self.coef_.shape[-1]))
 
             for sample, weight in zip(X, sample_weight):
-                self._partial_fit(sample, weight)
                 print("sample: ", sample)
                 print("weight: ",weight)
+                self._partial_fit(sample, weight)
+               
                 
             p_micro_cluster_centers = np.array([p_micro_cluster.center() for
                                                     p_micro_cluster in
