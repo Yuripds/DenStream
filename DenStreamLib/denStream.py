@@ -113,6 +113,8 @@ class DenStream:
             # "data %d." % (n_features, self.coef_.shape[-1]))
 
             for sample, weight in zip(X, sample_weight):
+                print("sample: ", sample)
+                print("weight: ",weight)
                 self._partial_fit(sample, weight)
                
                 
@@ -136,7 +138,7 @@ class DenStream:
             y=[]
             usuarios_add = 0
             while (usuarios_add<=qtd_users_Add):
-                nova_amostra = X_part[0+usuarioFinal:usuarioFinal+1].to_numpy()
+                nova_amostra = X_part[0+usuarioFinal:usuarioFinal+1].to_numpy(dtype='float32')
                 new_sample_weight = np.ones(1, dtype=np.float64, order='C')
                 
                 print("sample2: ", nova_amostra)
