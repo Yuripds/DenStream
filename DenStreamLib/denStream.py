@@ -102,9 +102,6 @@ class DenStream:
 
             X = check_array(X, dtype=np.float64, order="C")
 
-            print('X: ', X)
-            print('shape: ', X.shape)
-
             n_samples, _ = X.shape
 
             sample_weight = self._validate_sample_weight(sample_weight, n_samples)
@@ -130,8 +127,11 @@ class DenStream:
 
             y_old = []
             for sample in X:
+                print('sample:' , sample)
                 index, _ = self._get_nearest_micro_cluster(sample,
                                                             self.p_micro_clusters)
+                print('index: ',index)
+
             y_old.append(dbscan.labels_[index])
 
 
