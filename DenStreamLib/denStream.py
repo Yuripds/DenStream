@@ -102,6 +102,9 @@ class DenStream:
 
             X = check_array(X, dtype=np.float64, order="C")
 
+            print('X: ', X)
+            print('shape: ', X.shape)
+
             n_samples, _ = X.shape
 
             sample_weight = self._validate_sample_weight(sample_weight, n_samples)
@@ -113,8 +116,6 @@ class DenStream:
             # "data %d." % (n_features, self.coef_.shape[-1]))
 
             for sample, weight in zip(X, sample_weight):
-                print("sample: ", sample)
-                print("weight: ",weight)
                 self._partial_fit(sample, weight)
                
                 
@@ -141,8 +142,7 @@ class DenStream:
                 nova_amostra = X_part[0+usuarioFinal:usuarioFinal+1].to_numpy(dtype='float32')[0]
                 new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                 
-                print("sample2: ", nova_amostra)
-                print("weight2: ",new_sample_weight)
+
                 self._partial_fit(nova_amostra, new_sample_weight)
 
                 p_micro_cluster_centers = np.array([p_micro_cluster.center() for
