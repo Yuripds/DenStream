@@ -128,10 +128,9 @@ class DenStream:
             y_old = []
             for sample in X:
                 index, _ = self._get_nearest_micro_cluster(sample,
-                                                            self.p_micro_clusters)
+                                                            self.p_micro_clusters)  
+                y_old.append(dbscan.labels_[index])
 
-            y_old.append(dbscan.labels_[index])
-            print('labels: ' ,dbscan.labels_[index])
 
             ### add novos usuários
             y=[]
