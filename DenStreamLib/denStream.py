@@ -261,6 +261,7 @@ class DenStream:
 
     def _partial_fit(self, sample, weight):
         self._merging(sample, weight)
+        print("Tp: ", self.tp)
         if self.t % self.tp == 0:
             self.p_micro_clusters = [p_micro_cluster for p_micro_cluster
                                      in self.p_micro_clusters if
