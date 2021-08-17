@@ -135,7 +135,7 @@ class DenStream:
             ### add novos usuários
             y=[]
             usuarios_add = 0
-            while (usuarios_add<=qtd_users_Add):
+            while (usuarios_add<qtd_users_Add):
                 nova_amostra = X_part[0+usuarioFinal:usuarioFinal+1].to_numpy(dtype='float32')[0]
                 new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                 
