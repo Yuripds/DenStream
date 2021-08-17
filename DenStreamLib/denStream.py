@@ -269,7 +269,7 @@ class DenStream:
                                      p_micro_cluster.weight() >= self.beta *
                                      self.mu]
             
-            [print(p_micro_cluster) for p_micro_cluster
+            [print(p_micro_cluster.weight()) for p_micro_cluster
                                      in self.p_micro_clusters if
                                      p_micro_cluster.weight() >= self.beta *
                                      self.mu]
