@@ -268,8 +268,8 @@ class DenStream:
                                      in self.p_micro_clusters if
                                      p_micro_cluster.weight() >= self.beta *
                                      self.mu]
-            for p_micro_cluster in self.p_micro_clusters:
-                print('pesos: ', p_micro_cluster.weight())
+            
+            print('pesos: ', self.p_micro_clusters.weight())
             Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
                                           + self.tp) - 1) /
                     (self._decay_function(self.tp) - 1)) for o_micro_cluster in
