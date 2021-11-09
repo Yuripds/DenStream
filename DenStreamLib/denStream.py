@@ -281,6 +281,7 @@ class DenStream:
                                           + self.tp) - 1) /
                     (self._decay_function(self.tp) - 1)) for o_micro_cluster in
                    self.o_micro_clusters]
+            print("Xis: ",Xis)
             self.o_micro_clusters = [o_micro_cluster for Xi, o_micro_cluster in
                                      zip(Xis, self.o_micro_clusters) if
                                      o_micro_cluster.weight() >= Xi]
