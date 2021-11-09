@@ -264,6 +264,7 @@ class DenStream:
         
         if self.t % self.tp == 0:
             print("entrou")
+            print("Tp: ",self.tp)
             
             self.p_micro_clusters = [p_micro_cluster for p_micro_cluster
                                      in self.p_micro_clusters if
