@@ -274,7 +274,7 @@ class DenStream:
                                      p_micro_cluster.weight() >= self.beta *
                                      self.mu]
             
-            [print('pesos_pmc: ',p_micro_cluster.center()) for p_micro_cluster
+            [print('centros_pmc: ',p_micro_cluster.center()) for p_micro_cluster
                                      in self.p_micro_clusters]
 
             Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
@@ -286,7 +286,7 @@ class DenStream:
                                      zip(Xis, self.o_micro_clusters) if
                                      o_micro_cluster.weight() >= Xi]
 
-            [print('pesos_omc: ',o_micro_cluster.center()) for  o_micro_cluster in
+            [print('centros_omc: ',o_micro_cluster.center()) for  o_micro_cluster in
                                       self.o_micro_clusters]
         self.t += 1
 
