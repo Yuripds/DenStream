@@ -247,6 +247,7 @@ class DenStream:
             index, nearest_o_micro_cluster = \
                 self._get_nearest_micro_cluster(sample, self.o_micro_clusters)
             success = self._try_merge(sample, weight, nearest_o_micro_cluster)
+            print("success_out: ", success)
             if success:
                 if nearest_o_micro_cluster.weight() > self.beta * self.mu:
                     del self.o_micro_clusters[index]
