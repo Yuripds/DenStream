@@ -269,14 +269,16 @@ class DenStream:
             print("Tp: ",self.tp)
             print("t: ",self.t)
 
+            for p_micro_cluster in self.p_micro_clusters:
+                print('centros_pmc: ',p_micro_cluster.center()) 
+                print("loop")
+
             self.p_micro_clusters = [p_micro_cluster for p_micro_cluster
                                      in self.p_micro_clusters if
                                      p_micro_cluster.weight() >= self.beta *
                                      self.mu]
             
-            for p_micro_cluster in self.p_micro_clusters:
-                print('centros_pmc: ',p_micro_cluster.center()) 
-                print("loop")
+
 
             Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
                                           + self.tp) - 1) /
