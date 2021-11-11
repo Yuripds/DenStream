@@ -213,7 +213,7 @@ class DenStream:
                                                        self.p_micro_clusters)
             y.append(dbscan.labels_[index])
 
-        return y
+        return y,p_micro_cluster_centers
 
     def _get_nearest_micro_cluster(self, sample, micro_clusters):
         smallest_distance = sys.float_info.max
