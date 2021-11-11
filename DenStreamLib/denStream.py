@@ -275,7 +275,8 @@ class DenStream:
                                      self.mu]
             
             for p_micro_cluster in self.p_micro_clusters:
-                print('centros_pmc: ',p_micro_cluster.radius()) 
+                print('raio_pmc: ',p_micro_cluster.radius()) 
+                print('centros_pmc: ',p_micro_cluster.center()) 
                 print("loop")
 
             Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
@@ -288,7 +289,8 @@ class DenStream:
                                      o_micro_cluster.weight() >= Xi]
 
             for  o_micro_cluster in self.o_micro_clusters:
-                print('centros_omc: ',o_micro_cluster.radius())
+                print('raio_omc: ',o_micro_cluster.radius()) 
+                print('centros_omc: ',o_micro_cluster.center())
         self.t += 1
 
     def _validate_sample_weight(self, sample_weight, n_samples):
