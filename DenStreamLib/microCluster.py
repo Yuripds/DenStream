@@ -15,17 +15,10 @@ class MicroCluster:
             # Update sum of weights
             old_sum_of_weights = self.sum_of_weights
             new_sum_of_weights = old_sum_of_weights * self.decay_factor + weight
-            print('old_sum_of_weights: ',old_sum_of_weights)
-            print('new_sum_of_weights: ',new_sum_of_weights)
 
             # Update mean
             old_mean = self.mean
             new_mean = old_mean + (weight / new_sum_of_weights) * (sample - old_mean)
-            print("old_mean: ",type(old_mean))
-            print("old:",old_mean)
-            print("resto: ", (weight / new_sum_of_weights) * (sample - old_mean) )
-            print("resto: ",type((weight / new_sum_of_weights) * (sample - old_mean)))
-            print("new:",new_mean)
             # Update variance
             old_variance = self.variance
             new_variance = old_variance * ((new_sum_of_weights - weight)

@@ -270,7 +270,7 @@ class DenStream:
             print("t: ",self.t)
 
             for p_micro_cluster in self.p_micro_clusters:
-                print('centros_pmc: ',p_micro_cluster.center()) 
+                print('centros_pmc: ',p_micro_cluster.radius()) 
                 print("loop")
 
             self.p_micro_clusters = [p_micro_cluster for p_micro_cluster
@@ -290,7 +290,7 @@ class DenStream:
                                      o_micro_cluster.weight() >= Xi]
 
             for  o_micro_cluster in self.o_micro_clusters:
-                print('centros_omc: ',o_micro_cluster.center())
+                print('centros_omc: ',o_micro_cluster.radius())
         self.t += 1
 
     def _validate_sample_weight(self, sample_weight, n_samples):
