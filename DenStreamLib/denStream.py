@@ -270,7 +270,7 @@ class DenStream:
             print("t: ",self.t)
 
             for p_micro_cluster in self.p_micro_clusters:
-                print('centros_pmc: ',p_micro_cluster.center()) 
+                print('pmc: ',p_micro_cluster) 
                 print("loop")
 
             self.p_micro_clusters = [p_micro_cluster for p_micro_cluster
