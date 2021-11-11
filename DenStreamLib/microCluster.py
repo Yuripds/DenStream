@@ -28,6 +28,7 @@ class MicroCluster:
             self.variance = new_variance
             self.sum_of_weights = new_sum_of_weights
         else:
+            print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeei")
             self.mean = sample
             self.sum_of_weights = weight
 
