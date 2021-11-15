@@ -250,7 +250,7 @@ class DenStream:
             print("radius_mc:",nearest_p_micro_cluster.radius())
 
             for mc in self.p_micro_clusters:
-                print("centros_deTodos: ",mc.center())
+                print("centros_deTodos_pmc: ",mc.center())
 
         if not success:
             # Try to merge the sample into its nearest o_micro_cluster
@@ -260,6 +260,9 @@ class DenStream:
             
             if success:
                 print("sample_out:",sample)
+
+                for omc in self.o_micro_clusters:
+                    print("centros_deTodos_omc: ",omc.center())
 
                 if nearest_o_micro_cluster.weight() > self.beta * self.mu:
                     del self.o_micro_clusters[index]
