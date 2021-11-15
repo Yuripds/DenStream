@@ -19,6 +19,7 @@ class MicroCluster:
             # Update mean
             old_mean = self.mean
             new_mean = old_mean + (weight / new_sum_of_weights) * (sample - old_mean)
+            print("new_mean: ", new_mean)
             # Update variance
             old_variance = self.variance
             new_variance = old_variance * ((new_sum_of_weights - weight)
