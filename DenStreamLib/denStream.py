@@ -244,7 +244,10 @@ class DenStream:
         _, nearest_p_micro_cluster = \
             self._get_nearest_micro_cluster(sample, self.p_micro_clusters)
         success = self._try_merge(sample, weight, nearest_p_micro_cluster)
-        
+        if success==True:
+            print("sample:",sample)
+            print("centro_mc:",nearest_p_micro_cluster.center())
+            print("radius_mc:",nearest_p_micro_cluster.radius())
         if not success:
             # Try to merge the sample into its nearest o_micro_cluster
             index, nearest_o_micro_cluster = \
