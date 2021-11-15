@@ -265,6 +265,7 @@ class DenStream:
                     print("centros_deTodos_omc: ",omc.center())
 
                 if nearest_o_micro_cluster.weight() > self.beta * self.mu:
+                    print("virou pmc: ",nearest_o_micro_cluster.center())
                     del self.o_micro_clusters[index]
                     self.p_micro_clusters.append(nearest_o_micro_cluster)
             else:
