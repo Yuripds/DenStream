@@ -244,13 +244,13 @@ class DenStream:
         _, nearest_p_micro_cluster = \
             self._get_nearest_micro_cluster(sample, self.p_micro_clusters)
         success = self._try_merge(sample, weight, nearest_p_micro_cluster)
-        print("success: ", success)
+        
         if not success:
             # Try to merge the sample into its nearest o_micro_cluster
             index, nearest_o_micro_cluster = \
                 self._get_nearest_micro_cluster(sample, self.o_micro_clusters)
             success = self._try_merge(sample, weight, nearest_o_micro_cluster)
-            print("success_out: ", success)
+            
             if success:
                 if nearest_o_micro_cluster.weight() > self.beta * self.mu:
                     del self.o_micro_clusters[index]
@@ -268,32 +268,23 @@ class DenStream:
         self._merging(sample, weight)
         
         if self.t % self.tp == 0:
-            print("entrou")
-            print("Tp: ",self.tp)
-            print("t: ",self.t)
-
+           
             self.p_micro_clusters = [p_micro_cluster for p_micro_cluster
                                      in self.p_micro_clusters if
                                      p_micro_cluster.weight() >= self.beta *
                                      self.mu]
             
-            for p_micro_cluster in self.p_micro_clusters:
-                print('raio_pmc: ',p_micro_cluster.radius()) 
-                print('centros_pmc: ',p_micro_cluster.center()) 
-                print("loop")
-
+           
             Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
                                           + self.tp) - 1) /
                     (self._decay_function(self.tp) - 1)) for o_micro_cluster in
                    self.o_micro_clusters]
-            print("Xis: ",Xis)
+            
             self.o_micro_clusters = [o_micro_cluster for Xi, o_micro_cluster in
                                      zip(Xis, self.o_micro_clusters) if
                                      o_micro_cluster.weight() >= Xi]
 
-            for  o_micro_cluster in self.o_micro_clusters:
-                print('raio_omc: ',o_micro_cluster.radius()) 
-                print('centros_omc: ',o_micro_cluster.center())
+            
         self.t += 1
 
     def _validate_sample_weight(self, sample_weight, n_samples):
