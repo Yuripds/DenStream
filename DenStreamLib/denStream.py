@@ -248,6 +248,10 @@ class DenStream:
             print("sample:",sample)
             print("centro_mc:",nearest_p_micro_cluster.center())
             print("radius_mc:",nearest_p_micro_cluster.radius())
+
+            for mc in self.p_micro_clusters:
+                print("centros_deTodos: ",mc.center())
+                
         if not success:
             # Try to merge the sample into its nearest o_micro_cluster
             index, nearest_o_micro_cluster = \
