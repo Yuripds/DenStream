@@ -211,8 +211,9 @@ class DenStream:
             index, _ = self._get_nearest_micro_cluster(sample,
                                                        self.p_micro_clusters,flag=1)
             print("index_: ", index)
+            
             y.append(dbscan.labels_[index])
-        
+        print("dbscan.labels_: ", dbscan.labels_)
         core_samplesIndex = dbscan.core_sample_indices_
         componentes_coreSample= dbscan.components_
 
