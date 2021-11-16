@@ -204,12 +204,12 @@ class DenStream:
         p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
                                    self.p_micro_clusters]
         dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
-        dbscan.fit(p_micro_cluster_centers)
-        # sample_weight=p_micro_cluster_weights
+        dbscan.fit(p_micro_cluster_centers,sample_weight=p_micro_cluster_weights)
+
         y = []
         for sample in X:
             index, _ = self._get_nearest_micro_cluster(sample,
-                                                       self.p_micro_clusters)
+                                                       self.p_micro_clusters,flag=1)
             y.append(dbscan.labels_[index])
         
         core_samplesIndex = dbscan.core_sample_indices_
@@ -217,16 +217,23 @@ class DenStream:
 
         return y,p_micro_cluster_centers,core_samplesIndex,componentes_coreSample
 
-    def _get_nearest_micro_cluster(self, sample, micro_clusters):
+    def _get_nearest_micro_cluster(self, sample, micro_clusters,flag=0):
         smallest_distance = sys.float_info.max
         nearest_micro_cluster = None
         nearest_micro_cluster_index = -1
         for i, micro_cluster in enumerate(micro_clusters):
             current_distance = np.linalg.norm(micro_cluster.center() - sample)
+            if flag==1:
+                print("sample", sample)
+                print("centro: ", micro_cluster.center())
+                print("current_distance: ", current_distance)
             if current_distance < smallest_distance:
                 smallest_distance = current_distance
                 nearest_micro_cluster = micro_cluster
                 nearest_micro_cluster_index = i
+        if flag==1:
+            print("microCluster_escolhido: ", nearest_micro_cluster.center())
+            print("#############################################")
         return nearest_micro_cluster_index, nearest_micro_cluster
 
     def _try_merge(self, sample, weight, micro_cluster):
