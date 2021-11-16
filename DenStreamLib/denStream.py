@@ -235,8 +235,8 @@ class DenStream:
             micro_cluster_copy = copy(micro_cluster)
             micro_cluster_copy.insert_sample(sample, weight)
             if micro_cluster_copy.radius() <= self.eps:
-                micro_cluster.insert_sample(sample, weight)
                 print("microCluster_maisPróximo: ", micro_cluster.center())
+                micro_cluster.insert_sample(sample, weight)
                 return True
         return False
 
