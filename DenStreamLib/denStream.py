@@ -273,6 +273,8 @@ class DenStream:
                 micro_cluster = microCluster.MicroCluster(self.lambd, self.t)
                 micro_cluster.insert_sample(sample, weight)
                 self.o_micro_clusters.append(micro_cluster)
+                print("sample que criou omc: ", sample)
+                print("criou omc: ", micro_cluster.center())
 
     def _decay_function(self, t):
         return 2 ** ((-self.lambd) * (t))
