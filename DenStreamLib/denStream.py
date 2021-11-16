@@ -236,6 +236,7 @@ class DenStream:
             micro_cluster_copy.insert_sample(sample, weight)
             if micro_cluster_copy.radius() <= self.eps:
                 micro_cluster.insert_sample(sample, weight)
+                print("microCluster_maisPróximo: ", micro_cluster.center())
                 return True
         return False
 
@@ -243,7 +244,6 @@ class DenStream:
         # Try to merge the sample with its nearest p_micro_cluster
         _, nearest_p_micro_cluster = \
             self._get_nearest_micro_cluster(sample, self.p_micro_clusters)
-        print("microCluster_maisPróximo: ", nearest_p_micro_cluster.center())
         success = self._try_merge(sample, weight, nearest_p_micro_cluster)
         if success==True:
             print("sample:",sample)
