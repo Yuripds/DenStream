@@ -215,12 +215,12 @@ class DenStream:
                 gainList = p_micro_cluster.getGainChannel()
                 print("gainList: ",gainList[0])
                 ganhoTempoList = p_micro_cluster.getGanhoTempo()
-                for idx,gain in enumerate(gainList[0]):
-                    print("ganhoTempoList",ganhoTempoList)
-                    print("ganhoTempoList_tamanho",len(ganhoTempoList))
-                    print("gainList[0]_len",len(gainList[0]))
+                for idx in range(len(gainList[0])):
+                    print("ganhoTempoList: ",ganhoTempoList)
+                    print("ganhoTempoList_tamanho: ",len(ganhoTempoList))
+                    print("gainList[0]_len: ",len(gainList[0]))
  
-                    if (abs(gain) - abs(ganhoTempoList[idx][self.t]))> self.zeta:
+                    if (abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))> self.zeta:
                         p_micro_cluster.delete_sample(sample,idx,weight)
                         self.newUsers.append(sample)
 
