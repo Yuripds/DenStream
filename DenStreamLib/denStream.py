@@ -111,6 +111,7 @@ class DenStream:
                 self.newUsers.append(users)
             
             for i,users in enumerate(self.newUsers):
+                print("EStou aquuuuuuuuuuuuuuui")
                 nova_amostra = users.to_numpy(dtype='float32')[0]
                 new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                 
