@@ -80,8 +80,6 @@ class DenStream:
             
             indx=0
             for sample, weight in zip(X, sample_weight):
-                print("sample: ", sample)
-                print("weight: ", weight)
                 self._partial_fit(sample,estimacaoGanhoCanal[indx], weight)
                 indx = indx+1
                
@@ -220,8 +218,8 @@ class DenStream:
                 gainList = p_micro_cluster.getGainChannel()
                 
                 ganhoTempoList = p_micro_cluster.getGanhoTempo()
-                print("abs(gainList[idx])",abs(gainList[idx]))
-                print(" abs(ganhoTempoList[idx][self.t]))", abs(ganhoTempoList[idx][self.t]))
+                print("abs(gainList[idx])",abs(gainList))
+                print(" abs(ganhoTempoList[idx][self.t]))", abs(ganhoTempoList))
                 for idx in range(len(gainList[0])):
                     if (abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))> self.zeta:
                         p_micro_cluster.delete_sample(sample,idx,weight)
