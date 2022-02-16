@@ -28,13 +28,15 @@ class MicroCluster:
                                            / old_sum_of_weights) + weight * (sample - new_mean) * (sample - old_mean)
 
             # Update Ganho de canal
-            self.gainChannel.append(sample)
+            gc_aux = self.gainChannel
+            gt_aux.append(sample)
+            self.gainChannel = gc_aux
 
             # Update Ganho no tempo
-            
-            print("isto esta sendo adicionado: ",estimacaoGanhoCanal)
-            print("nisso: ",self.ganhoTempo)
-            self.ganhoTempo.append(estimacaoGanhoCanal)
+
+            gt_aux = self.ganhoTempo
+            gt_aux.append(estimacaoGanhoCanal)
+            self.ganhoTempo= gt_aux
 
             self.mean = new_mean
             self.variance = new_variance
