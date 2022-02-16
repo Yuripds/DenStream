@@ -30,14 +30,22 @@ class MicroCluster:
 
             # Update Ganho de canal
             gc_aux = self.gainChannel
+
+
+            print("teeeeeeeeeeeeeste4444444444 Antes:", self.gainChannel)
             gc_aux.append(sample)
             self.gainChannel = gc_aux
 
+            print("teeeeeeeeeeeeeste4444444444 depois:", self.gainChannel)
             # Update Ganho no tempo
 
             gt_aux = self.ganhoTempo
+
+            print("teeeeeeeeeeeeeste5 antes:",self.ganhoTempo)
             gt_aux.append(estimacaoGanhoCanal)
             self.ganhoTempo= gt_aux
+
+            print("teeeeeeeeeeeeeste5 depois:",self.ganhoTempo)
 
             self.mean = new_mean
             self.variance = new_variance
