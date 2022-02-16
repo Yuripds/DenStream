@@ -31,6 +31,9 @@ class MicroCluster:
             self.gainChannel.append(sample)
 
             # Update Ganho no tempo
+            
+            print("isto esta sendo adicionado: ",estimacaoGanhoCanal)
+            print("nisso: ",self.ganhoTempo)
             self.ganhoTempo.append(estimacaoGanhoCanal)
 
             self.mean = new_mean
