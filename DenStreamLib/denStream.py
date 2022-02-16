@@ -77,6 +77,7 @@ class DenStream:
             # raise ValueError("Number of features %d does not match previous "
             # "data %d." % (n_features, self.coef_.shape[-1]))
             estimacaoGanhoCanal = estimacao_tempo
+            print(len(estimacaoGanhoCanal))
             indx=0
             for sample, weight in zip(X, sample_weight):
                 print("teste: ", estimacaoGanhoCanal[indx])
