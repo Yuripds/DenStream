@@ -43,6 +43,7 @@ class MicroCluster:
 
 
     def delete_sample(self,sample,index,weight):
+        print("Essa função foi chamada")
         # Update sum of weights
         old_sum_of_weights = self.sum_of_weights
         new_sum_of_weights = old_sum_of_weights * self.decay_factor - weight

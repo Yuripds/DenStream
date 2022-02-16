@@ -217,7 +217,7 @@ class DenStream:
                 gainList = p_micro_cluster.getGainChannel()
                 
                 ganhoTempoList = p_micro_cluster.getGanhoTempo()
-                print("ganhoTempoList____1: ",len(ganhoTempoList[0]))
+                print("ganhoTempoList____1: ",len(ganhoTempoList))
                 for idx in range(len(gainList[0])):
                     print("ganhoTempoList: ",ganhoTempoList[idx])
                     print("ganhoTempoList_tamanho: ",len(ganhoTempoList))
