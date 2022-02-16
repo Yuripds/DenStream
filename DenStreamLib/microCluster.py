@@ -13,7 +13,7 @@ class MicroCluster:
         self.ganhoTempo = []
 
     def insert_sample(self, sample,estimacaoGanhoCanal, weight):
-        print("teeeeeeeeeeeeeeeeeeeeeeeeeste33333333333333333333333333333333333:",estimacaoGanhoCanal)
+
         if self.sum_of_weights != 0:
             # Update sum of weights
             old_sum_of_weights = self.sum_of_weights
@@ -30,22 +30,15 @@ class MicroCluster:
 
             # Update Ganho de canal
             gc_aux = self.gainChannel
-
-
-            print("teeeeeeeeeeeeeste4444444444 Antes:", self.gainChannel)
-            gc_aux.append(sample)
+            gc_aux.append(sample[0])
             self.gainChannel = gc_aux
 
-            print("teeeeeeeeeeeeeste4444444444 depois:", self.gainChannel)
             # Update Ganho no tempo
 
             gt_aux = self.ganhoTempo
-
-            print("teeeeeeeeeeeeeste5 antes:",self.ganhoTempo)
             gt_aux.append(estimacaoGanhoCanal)
             self.ganhoTempo= gt_aux
 
-            print("teeeeeeeeeeeeeste5 depois:",self.ganhoTempo)
 
             self.mean = new_mean
             self.variance = new_variance

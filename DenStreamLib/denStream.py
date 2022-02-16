@@ -77,7 +77,7 @@ class DenStream:
             # raise ValueError("Number of features %d does not match previous "
             # "data %d." % (n_features, self.coef_.shape[-1]))
             estimacaoGanhoCanal = estimacao_tempo
-            print("teeeeeeeeeeeeeeeeeeeeeeeeeste:",len(estimacaoGanhoCanal))
+            
             indx=0
             for sample, weight in zip(X, sample_weight):
                 print("sample: ", sample)
@@ -211,8 +211,7 @@ class DenStream:
         return 2 ** ((-self.lambd) * (t))
 
     def _partial_fit(self, sample,estimacaoGanhoCanal, weight):
-        print("teeeeeeeeeeeeeeeeeeeeeeeeeste111111111:",len(estimacaoGanhoCanal))
-        print("teeeeeeeeeeeeeeeeeeeeeeeeeste222222222222222222:",estimacaoGanhoCanal)
+
         self._merging(sample, estimacaoGanhoCanal, weight)
         
         if self.t % self.tp == 0:  
@@ -221,12 +220,7 @@ class DenStream:
                 gainList = p_micro_cluster.getGainChannel()
                 
                 ganhoTempoList = p_micro_cluster.getGanhoTempo()
-                print("ganhoTempoList____1: ",len(ganhoTempoList[0]))
                 for idx in range(len(gainList[0])):
-                    print("ganhoTempoList: ",ganhoTempoList[idx])
-                    print("ganhoTempoList_tamanho: ",len(ganhoTempoList))
-                    print("gainList[0]_len: ",len(gainList[0]))
- 
                     if (abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))> self.zeta:
                         p_micro_cluster.delete_sample(sample,idx,weight)
                         self.newUsers.append(sample)
