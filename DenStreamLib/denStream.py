@@ -80,7 +80,8 @@ class DenStream:
             print("teeeeeeeeeeeeeeeeeeeeeeeeeste:",len(estimacaoGanhoCanal))
             indx=0
             for sample, weight in zip(X, sample_weight):
-                print("teste: ", estimacaoGanhoCanal[indx])
+                print("sample: ", sample)
+                print("weight: ", weight)
                 self._partial_fit(sample,estimacaoGanhoCanal[indx], weight)
                 indx = indx+1
                
