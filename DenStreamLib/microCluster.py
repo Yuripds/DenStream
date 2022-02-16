@@ -29,7 +29,7 @@ class MicroCluster:
 
             # Update Ganho de canal
             gc_aux = self.gainChannel
-            gt_aux.append(sample)
+            gc_aux.append(sample)
             self.gainChannel = gc_aux
 
             # Update Ganho no tempo
