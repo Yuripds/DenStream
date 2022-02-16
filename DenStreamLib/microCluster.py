@@ -13,6 +13,7 @@ class MicroCluster:
         self.ganhoTempo = []
 
     def insert_sample(self, sample,estimacaoGanhoCanal, weight):
+        print("teeeeeeeeeeeeeeeeeeeeeeeeeste33333333333333333333333333333333333:",estimacaoGanhoCanal)
         if self.sum_of_weights != 0:
             # Update sum of weights
             old_sum_of_weights = self.sum_of_weights

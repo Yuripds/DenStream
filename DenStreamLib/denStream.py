@@ -210,7 +210,7 @@ class DenStream:
         return 2 ** ((-self.lambd) * (t))
 
     def _partial_fit(self, sample,estimacaoGanhoCanal, weight):
-        print("teeeeeeeeeeeeeeeeeeeeeeeeeste:",len(estimacaoGanhoCanal))
+        print("teeeeeeeeeeeeeeeeeeeeeeeeeste111111111:",len(estimacaoGanhoCanal))
         print("teeeeeeeeeeeeeeeeeeeeeeeeeste222222222222222222:",estimacaoGanhoCanal)
         self._merging(sample, estimacaoGanhoCanal, weight)
         
