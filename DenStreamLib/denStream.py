@@ -79,6 +79,7 @@ class DenStream:
             estimacaoGanhoCanal = estimacao_tempo
             indx=0
             for sample, weight in zip(X, sample_weight):
+                print("teste: ", estimacaoGanhoCanal[indx])
                 self._partial_fit(sample,estimacaoGanhoCanal[indx], weight)
                 indx = indx+1
                
@@ -111,7 +112,7 @@ class DenStream:
                 self.newUsers.append(users)
             
             for i,users in enumerate(self.newUsers):
-                print("EStou aquuuuuuuuuuuuuuui")
+                
                 nova_amostra = users.to_numpy(dtype='float32')[0]
                 new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                 
@@ -216,7 +217,7 @@ class DenStream:
                 gainList = p_micro_cluster.getGainChannel()
                 
                 ganhoTempoList = p_micro_cluster.getGanhoTempo()
-                print("ganhoTempoList____1: ",len(ganhoTempoList))
+                print("ganhoTempoList____1: ",len(ganhoTempoList[0]))
                 for idx in range(len(gainList[0])):
                     print("ganhoTempoList: ",ganhoTempoList[idx])
                     print("ganhoTempoList_tamanho: ",len(ganhoTempoList))
