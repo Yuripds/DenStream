@@ -80,6 +80,8 @@ class DenStream:
             
             indx=0
             for sample, weight in zip(X, sample_weight):
+                print("sample: ",sample)
+                print("weight: ",weight)
                 self._partial_fit(sample,estimacaoGanhoCanal[indx], weight)
                 indx = indx+1
                
@@ -116,7 +118,8 @@ class DenStream:
                 nova_amostra = users
                 new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                 
-
+                print("nova_amostra: ",nova_amostra)
+                print("new_sample_weight: ",new_sample_weight)
                 self._partial_fit(nova_amostra,estimacao_tempo_novosUsers[i], new_sample_weight)
 
                 p_micro_cluster_centers = np.array([p_micro_cluster.center() for
@@ -143,8 +146,8 @@ class DenStream:
         smallest_distance = sys.float_info.max
         nearest_micro_cluster = None
         nearest_micro_cluster_index = -1
-        for i, micro_cluster in enumerate(micro_clusters):     # -sample
-            current_distance = np.linalg.norm(micro_cluster.center() )
+        for i, micro_cluster in enumerate(micro_clusters):     
+            current_distance = np.linalg.norm(micro_cluster.center()-sample)
             if flag==1:
                 print("sample", sample)
                 print("centro: ", micro_cluster.center())
