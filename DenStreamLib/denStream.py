@@ -113,7 +113,7 @@ class DenStream:
             user_nlist = novos_users.to_numpy(dtype='float32')
             for users in enumerate(user_nlist):
                 #print("novos_users: ",novos_users.to_numpy(dtype='float32'))
-                self.newUsers.append()
+                self.newUsers.append(users)
             
             for i,users in enumerate(self.newUsers):
                 
