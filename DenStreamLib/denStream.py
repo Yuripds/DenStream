@@ -117,8 +117,8 @@ class DenStream:
             
             for i,users in enumerate(self.newUsers):
                 
-                nova_amostra = users
-                print("nova_amostra: ",nova_amostra[1])
+                nova_amostra = users[1]
+                #print("nova_amostra: ",nova_amostra[1])
                 new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                 
 
@@ -144,7 +144,7 @@ class DenStream:
             
     
 
-    def _get_nearest_micro_cluster(self, sample, micro_clusters,flag=1):
+    def _get_nearest_micro_cluster(self, sample, micro_clusters,flag=0):
         smallest_distance = sys.float_info.max
         nearest_micro_cluster = None
         nearest_micro_cluster_index = -1
