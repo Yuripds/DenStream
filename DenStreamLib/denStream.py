@@ -159,9 +159,9 @@ class DenStream:
                 smallest_distance = current_distance
                 nearest_micro_cluster = micro_cluster
                 nearest_micro_cluster_index = i
-        if flag==1:
-            print("microCluster_escolhido: ", nearest_micro_cluster.center())
-            print("#############################################")
+        #if flag==1:
+            #print("microCluster_escolhido: ", nearest_micro_cluster.center())
+            #print("#############################################")
         return nearest_micro_cluster_index, nearest_micro_cluster
 
     def _try_merge(self, sample,estimacaoGanhoCanal, weight, micro_cluster):
