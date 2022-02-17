@@ -144,16 +144,17 @@ class DenStream:
             
     
 
-    def _get_nearest_micro_cluster(self, sample, micro_clusters,flag=0):
+    def _get_nearest_micro_cluster(self, sample, micro_clusters,flag=1):
         smallest_distance = sys.float_info.max
         nearest_micro_cluster = None
         nearest_micro_cluster_index = -1
         for i, micro_cluster in enumerate(micro_clusters):     
-            current_distance = np.linalg.norm(micro_cluster.center()-sample)
+            current_distance = np.linalg.norm(micro_cluster.center() - sample )
             if flag==1:
                 print("sample", sample)
                 print("centro: ", micro_cluster.center())
                 print("current_distance: ", current_distance)
+                print("smallest_distance: ", smallest_distance)
             if current_distance < smallest_distance:
                 smallest_distance = current_distance
                 nearest_micro_cluster = micro_cluster
