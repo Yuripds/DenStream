@@ -111,7 +111,7 @@ class DenStream:
             ### add novos usuários
             y=[]
             for users in enumerate(novos_users):
-                print("novos_users: ",novos_users)
+                print("novos_users: ",novos_users.to_numpy(dtype='float32')[0])
                 self.newUsers.append(users)
             
             for i,users in enumerate(self.newUsers):
