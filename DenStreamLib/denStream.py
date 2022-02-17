@@ -111,16 +111,16 @@ class DenStream:
             ### add novos usuários
             y=[]
             for users in enumerate(novos_users):
-                print("novos_users: ",novos_users.to_numpy(dtype='float32'))
-                self.newUsers.append(users)
+                #print("novos_users: ",novos_users.to_numpy(dtype='float32'))
+                self.newUsers.append(users.to_numpy(dtype='float32'))
             
             for i,users in enumerate(self.newUsers):
                 
                 nova_amostra = users
+                print("nova_amostra: ",nova_amostra)
                 new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                 
-                print("nova_amostra: ",nova_amostra)
-                print("new_sample_weight: ",new_sample_weight)
+
                 self._partial_fit(nova_amostra,estimacao_tempo_novosUsers[i], new_sample_weight)
 
                 p_micro_cluster_centers = np.array([p_micro_cluster.center() for
