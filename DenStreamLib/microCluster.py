@@ -11,6 +11,7 @@ class MicroCluster:
         self.creation_time = creation_time
         self.gainChannel = []
         self.ganhoTempo = []
+        self.sampleList = []
 
     def insert_sample(self, sample,estimacaoGanhoCanal, weight):
 
@@ -39,6 +40,10 @@ class MicroCluster:
             gt_aux.append(estimacaoGanhoCanal)
             self.ganhoTempo= gt_aux
 
+            # Update sample list
+            sample_aux = self.sampleList
+            sample_aux.append(sample)
+            self.sampleList = sample_aux
 
             self.mean = new_mean
             self.variance = new_variance
@@ -70,11 +75,16 @@ class MicroCluster:
         # Update Ganho no tempo
         self.ganhoTempo.pop(index)
 
+        # Update sample list
+        self.sampleList.pop(index)
+
         self.mean = new_mean
         self.variance = new_variance
         self.sum_of_weights = new_sum_of_weights
        
-        
+    
+    def getSample(self):
+        return self.sampleList
 
     def radius(self):
         if self.sum_of_weights > 0:

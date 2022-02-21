@@ -149,9 +149,9 @@ class DenStream:
         nearest_micro_cluster = None
         nearest_micro_cluster_index = -1
         for i, micro_cluster in enumerate(micro_clusters):
-            print("teste1111111: ", sample )  
-            print("teste2222222: ", micro_cluster.center() )  
-            print("teste3333333: ",micro_cluster.center() - sample )
+           # print("teste1111111: ", sample )  
+           # print("teste2222222: ", micro_cluster.center() )  
+           # print("teste3333333: ",micro_cluster.center() - sample )
             current_distance = np.linalg.norm(micro_cluster.center() - sample )
             if flag==1:
                 print("sample", sample)
@@ -222,27 +222,37 @@ class DenStream:
         self._merging(sample, estimacaoGanhoCanal, weight)
         
         if self.t % self.tp == 0:  
-            
+                      
             for p_micro_cluster in self.p_micro_clusters:
                 gainList = p_micro_cluster.getGainChannel()
                 
                 ganhoTempoList = p_micro_cluster.getGanhoTempo()
                 print("abs(gainList[idx])",gainList)
 
+                sampleList = p_micro_cluster.getSample()
                 for idx in range(len(gainList)):
                     if (abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))> self.zeta:
-                        p_micro_cluster.delete_sample(sample,idx,weight)
-                        self.newUsers.append(sample)
+                         
+                        p_micro_cluster.delete_sample(sampleList[idx],idx,weight)
+                        self.newUsers.append(sampleList[idx])
 
 
-            Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
-                                          + self.tp) - 1) /
-                    (self._decay_function(self.tp) - 1)) for o_micro_cluster in
-                   self.o_micro_clusters]
+            for o_micro_cluster in self.o_micro_clusters:
+                gainList_outL = o_micro_cluster.getGainChannel()
+
+                sampleList = o_micro_cluster.getSample()
+                for idx in range(len(gainList_outL)):
+                    o_micro_cluster.delete_sample(sampleList[idx],idx,weight)
+                    self.newUsers.append(sampleList[idx])
+
+           ## Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
+           ##                               + self.tp) - 1) /
+           ##         (self._decay_function(self.tp) - 1)) for o_micro_cluster in
+           ##        self.o_micro_clusters]
             
-            self.o_micro_clusters = [o_micro_cluster for Xi, o_micro_cluster in
-                                     zip(Xis, self.o_micro_clusters) if
-                                     o_micro_cluster.weight() >= Xi]
+           ## self.o_micro_clusters = [o_micro_cluster for Xi, o_micro_cluster in
+           ##                          zip(Xis, self.o_micro_clusters) if
+           ##                         o_micro_cluster.weight() >= Xi]
 
             
         self.t += 1
