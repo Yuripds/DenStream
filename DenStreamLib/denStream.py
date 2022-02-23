@@ -56,7 +56,7 @@ class DenStream:
             self.tp = sys.maxsize
 
 
-    def _addUsers(self, X, y=None,y_old=None,estimacao_tempo=[],novos_users = [],estimacao_tempo_novosUsers = [], sample_weight=None):
+    def _addUsers(self, X, y=None,y_old=None,estimacao_tempo=[],novos_users = [],estimacao_tempo_novosUsers = [], sample_weight=None, ad_users=False):
             """
             Parameter
             ----------
@@ -80,67 +80,82 @@ class DenStream:
             
             indx=0
             for sample, weight in zip(X, sample_weight):
-                print("sample: ",sample)
-                print("weight: ",weight)
                 self._partial_fit(sample,estimacaoGanhoCanal[indx], weight)
                 indx = indx+1
                
                 
-            p_micro_cluster_centers = np.array([p_micro_cluster.center() for
-                                                    p_micro_cluster in
-                                                    self.p_micro_clusters])
+            ######## chamar função de manutenção aqui com flag dizendo que não vai mais add usuarios e colocar tudo isso de baixo na função
+            y_old_tempo = []
+            while contador<500:
+                if self.t % 10 == 0:  
+                    self.manutencao()
+
+                    p_micro_cluster_centers = np.array([p_micro_cluster.center() for
+                                                            p_micro_cluster in
+                                                            self.p_micro_clusters])
 
 
 
-            p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
-                                        self.p_micro_clusters]
+                    p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
+                                                self.p_micro_clusters]
 
 
 
-            dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
-            dbscan.fit(p_micro_cluster_centers,
-                        sample_weight=p_micro_cluster_weights)
+                    dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
+                    dbscan.fit(p_micro_cluster_centers,
+                                sample_weight=p_micro_cluster_weights)
 
-            y_old = []
-            for sample in X:
-                index, _ = self._get_nearest_micro_cluster(sample,
-                                                            self.p_micro_clusters)  
-                y_old.append(dbscan.labels_[index])
+                    y_old = []
+                    for sample in X:
+                        index, _ = self._get_nearest_micro_cluster(sample,
+                                                                    self.p_micro_clusters)  
+                        y_old.append(dbscan.labels_[index])
+
+                    y_old_tempo.append(y_old)
+                contador = contador+1
+                self.t += 1            
 
 
+############################ add flag para habilitar esta etapa ##############################################################
             ### add novos usuários
-            y=[]
-            user_nlist = novos_users.to_numpy(dtype='float32')
-            for users in enumerate(user_nlist):
-                #print("novos_users: ",novos_users.to_numpy(dtype='float32'))
-                self.newUsers.append(users)
+            if ad_users==True:
             
-            for i,users in enumerate(self.newUsers):
+                y=[]
+                user_nlist = novos_users.to_numpy(dtype='float32')
+                for users in enumerate(user_nlist):
+                    #print("novos_users: ",novos_users.to_numpy(dtype='float32'))
+                    self.newUsers.append(users)
                 
-                nova_amostra = users[1]
-                #print("nova_amostra: ",nova_amostra[1])
-                new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
-                
+                for i,users in enumerate(self.newUsers):
+                    
+                    nova_amostra = users[1]
+                    #print("nova_amostra: ",nova_amostra[1])
+                    new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
+                    
 
-                self._partial_fit(nova_amostra,estimacao_tempo_novosUsers[i], new_sample_weight)
+                    self._partial_fit(nova_amostra,estimacao_tempo_novosUsers[i], new_sample_weight)
 
-                p_micro_cluster_centers = np.array([p_micro_cluster.center() for
-                                                    p_micro_cluster in
-                                                    self.p_micro_clusters])
+                    p_micro_cluster_centers = np.array([p_micro_cluster.center() for
+                                                        p_micro_cluster in
+                                                        self.p_micro_clusters])
 
-                p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
-                                            self.p_micro_clusters]
+                    p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
+                                                self.p_micro_clusters]
 
-                dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
-                dbscan.fit(p_micro_cluster_centers,
-                            sample_weight=p_micro_cluster_weights)
-                
-                index, _ = self._get_nearest_micro_cluster(nova_amostra,self.p_micro_clusters)
+                    dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
+                    dbscan.fit(p_micro_cluster_centers,
+                                sample_weight=p_micro_cluster_weights)
+                    
+                    index, _ = self._get_nearest_micro_cluster(nova_amostra,self.p_micro_clusters)
 
-                y.append(dbscan.labels_[index])
+                    y.append(dbscan.labels_[index])
 
-            
-            return y,y_old
+                return y, y_old
+
+            else:
+                return y_old
+
+
             
     
 
@@ -149,9 +164,7 @@ class DenStream:
         nearest_micro_cluster = None
         nearest_micro_cluster_index = -1
         for i, micro_cluster in enumerate(micro_clusters):
-           # print("teste1111111: ", sample )  
-           # print("teste2222222: ", micro_cluster.center() )  
-           # print("teste3333333: ",micro_cluster.center() - sample )
+
             current_distance = np.linalg.norm(micro_cluster.center() - sample )
             if flag==1:
                 print("sample", sample)
@@ -217,23 +230,20 @@ class DenStream:
     def _decay_function(self, t):
         return 2 ** ((-self.lambd) * (t))
 
-    def _partial_fit(self, sample,estimacaoGanhoCanal, weight):
 
-        self._merging(sample, estimacaoGanhoCanal, weight)
-        
-        if self.t % self.tp == 0:  
-                      
+
+    def manutencao(self):
             for p_micro_cluster in self.p_micro_clusters:
                 gainList = p_micro_cluster.getGainChannel()
                 
                 ganhoTempoList = p_micro_cluster.getGanhoTempo()
-                print("abs(gainList[idx])",gainList)
 
                 sampleList = p_micro_cluster.getSample()
+
                 for idx in range(len(gainList)):
                     if (abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))> self.zeta:
                          
-                        p_micro_cluster.delete_sample(sampleList[idx],idx,weight)
+                        p_micro_cluster.delete_sample(sampleList[idx],idx)
                         self.newUsers.append(sampleList[idx])
 
 
@@ -241,20 +251,20 @@ class DenStream:
                 gainList_outL = o_micro_cluster.getGainChannel()
 
                 sampleList = o_micro_cluster.getSample()
+
                 for idx in range(len(gainList_outL)):
-                    o_micro_cluster.delete_sample(sampleList[idx],idx,weight)
+                    o_micro_cluster.delete_sample(sampleList[idx],idx)
                     self.newUsers.append(sampleList[idx])
 
-           ## Xis = [((self._decay_function(self.t - o_micro_cluster.creation_time
-           ##                               + self.tp) - 1) /
-           ##         (self._decay_function(self.tp) - 1)) for o_micro_cluster in
-           ##        self.o_micro_clusters]
-            
-           ## self.o_micro_clusters = [o_micro_cluster for Xi, o_micro_cluster in
-           ##                          zip(Xis, self.o_micro_clusters) if
-           ##                         o_micro_cluster.weight() >= Xi]
 
-            
+
+    def _partial_fit(self, sample,estimacaoGanhoCanal, weight):
+
+        self._merging(sample, estimacaoGanhoCanal, weight)
+        
+        if self.t % self.tp == 0:  
+            self.manutencao()
+
         self.t += 1
 
     def _validate_sample_weight(self, sample_weight, n_samples):
@@ -270,11 +280,3 @@ class DenStream:
             raise ValueError("Shapes of X and sample_weight do not match.")
         return sample_weight
 
-
-    
-# data = np.random.random([1000, 5]) * 500
-# clusterer = DenStream(lambd=0.1, eps=100, beta=0.5, mu=3)
-# #for row in data[:100]:
-
-# #    print(f"Number of p_micro_clusters is {len(clusterer.p_micro_clusters)}")
-# #    print(f"Number of o_micro_clusters is {len(clusterer.o_micro_clusters)}")

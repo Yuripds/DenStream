@@ -54,20 +54,16 @@ class MicroCluster:
             self.sum_of_weights = weight
 
 
-    def delete_sample(self,sample,index,weight):
+    def delete_sample(self,sample,index):
         print("Essa função foi chamada")
-        # Update sum of weights
-        old_sum_of_weights = self.sum_of_weights
-        new_sum_of_weights = old_sum_of_weights * self.decay_factor - weight
-
+  
         # Update mean
         old_mean = self.mean
-        new_mean = old_mean - (weight / new_sum_of_weights) * (sample - old_mean)
+        new_mean = old_mean - (sample - old_mean)
            
         # Update variance
         old_variance = self.variance
-        new_variance = old_variance * ((new_sum_of_weights - weight)
-                                           / old_sum_of_weights) - weight * (sample - new_mean) * (sample - old_mean)
+        new_variance = old_variance  -  (sample - new_mean) * (sample - old_mean)
 
         # Update Ganho de canal
         self.gainChannel.pop(index)
@@ -80,8 +76,7 @@ class MicroCluster:
 
         self.mean = new_mean
         self.variance = new_variance
-        self.sum_of_weights = new_sum_of_weights
-       
+
     
     def getSample(self):
         return self.sampleList
