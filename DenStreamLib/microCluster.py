@@ -42,7 +42,7 @@ class MicroCluster:
 
             # Update sample list
             sample_aux = self.sampleList
-            sample_aux.append(sample)
+            sample_aux.append(sample[0])
             self.sampleList = sample_aux
 
             self.mean = new_mean
