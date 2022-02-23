@@ -66,11 +66,11 @@ class DenStream:
             """
 
             X = check_array(X, dtype=np.float64, order="C")
-
+            print("X: ",X )
             n_samples, _ = X.shape
 
             sample_weight = self._validate_sample_weight(sample_weight, n_samples)
-
+            print("sample_weight: ",sample_weight )
             # if not hasattr(self, "potential_micro_clusters"):
 
             # if n_features != :
