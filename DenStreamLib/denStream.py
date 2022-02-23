@@ -253,10 +253,11 @@ class DenStream:
                     #print("abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]): ",abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
                         print("To aquuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui") 
+                        self.newUsers.append(sampleList[idx])
                         p_micro_cluster.delete_sample(sampleList[idx],idx)
                         tam_init = tam_init-1
 
-                        self.newUsers.append(sampleList[idx])
+                        
                     idx = idx +1
 
 
