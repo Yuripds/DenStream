@@ -88,7 +88,7 @@ class DenStream:
             y_old_tempo = []
             contador = 0
             while contador<500:
-                print("tempo:", self.t)
+                #print("tempo:", self.t)
                 if self.t % 10 == 0:  
                     self.manutencao()
 
