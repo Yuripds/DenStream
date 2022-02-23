@@ -244,6 +244,7 @@ class DenStream:
                 print("gainList: ",gainList)
                 #### mudar isso par aum while
                 tam_init = len(gainList)
+                idx=0
                 while(tam_init>idx):
                 #for idx in range(len(gainList)):
                     print("tamanhoGainList: ", len(gainList))
@@ -264,6 +265,7 @@ class DenStream:
 
                 sampleList = o_micro_cluster.getSample()
                 tam_init = len(gainList_outL)
+                idx=0
                 while(tam_init>idx):
                     self.newUsers.append(sampleList[idx])
                     o_micro_cluster.delete_sample(sampleList[idx],idx)
