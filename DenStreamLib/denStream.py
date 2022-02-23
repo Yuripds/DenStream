@@ -155,7 +155,7 @@ class DenStream:
                 return y, y_old
 
             else:
-                return y_old
+                return y_old_tempo
 
 
             
