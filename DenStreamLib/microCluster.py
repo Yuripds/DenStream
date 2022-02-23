@@ -59,14 +59,6 @@ class MicroCluster:
     def delete_sample(self,sample,index):
         print("Essa função foi chamada")
   
-        # Update mean
-        old_mean = self.mean
-        new_mean = old_mean - (sample - old_mean)
-           
-        # Update variance
-        old_variance = self.variance
-        new_variance = old_variance  -  (sample - new_mean) * (sample - old_mean)
-
         # Update Ganho de canal
         self.gainChannel.pop(index)
 
@@ -76,8 +68,6 @@ class MicroCluster:
         # Update sample list
         self.sampleList.pop(index)
 
-        self.mean = new_mean
-        self.variance = new_variance
 
     
     def getSample(self):
