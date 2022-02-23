@@ -56,7 +56,7 @@ class DenStream:
             self.tp = sys.maxsize
 
 
-    def _addUsers(self, X, y=None,y_old=None,estimacao_tempo=[],novos_users = [],estimacao_tempo_novosUsers = [], sample_weight=None, ad_users=False):
+    def _addUsers(self, X, y=None,y_old=None,estimacao_tempo=[],novos_users = [],estimacao_tempo_novosUsers = [], sample_weight=None, ad_users=False,time_param=500):
             """
             Parameter
             ----------
@@ -87,7 +87,7 @@ class DenStream:
             ######## chamar função de manutenção aqui com flag dizendo que não vai mais add usuarios e colocar tudo isso de baixo na função
             y_old_tempo = []
             contador = 0
-            while contador<500:
+            while contador<time_param:
                 #print("tempo:", self.t)
                 if self.t % 10 == 0:  
                     self.manutencao()
