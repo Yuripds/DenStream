@@ -86,6 +86,7 @@ class DenStream:
                 
             ######## chamar função de manutenção aqui com flag dizendo que não vai mais add usuarios e colocar tudo isso de baixo na função
             y_old_tempo = []
+            contador = 0
             while contador<500:
                 if self.t % 10 == 0:  
                     self.manutencao()
