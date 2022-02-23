@@ -101,8 +101,6 @@ class DenStream:
                     p_micro_cluster_weights = [p_micro_cluster.weight() for p_micro_cluster in
                                                 self.p_micro_clusters]
 
-                    print("p_micro_cluster_weights: ",p_micro_cluster_weights)
-                    print("o_micro_cluster_centers: ", self.o_micro_clusters.center())
 
                     dbscan = DBSCAN(eps=self.eps_dbscan, min_samples=self.min_samples_dbscan , algorithm='brute')
                     dbscan.fit(p_micro_cluster_centers,
@@ -249,6 +247,8 @@ class DenStream:
                     #print("abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]): ",abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
                         print("To aquuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui")
+                        print("gainList: ", gainList[idx])
+                        print("tamanhoGainList: ", len(gainList))
                         p_micro_cluster.delete_sample(sampleList[idx],idx)
                         print("idx: ",idx)
                         self.newUsers.append(sampleList[idx])
