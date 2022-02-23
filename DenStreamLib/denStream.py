@@ -243,8 +243,10 @@ class DenStream:
                 sampleList = p_micro_cluster.getSample()
 
                 for idx in range(len(gainList)):
+                    print("self.zeta: ", self.zeta)
+                    print("abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]): ",abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))
                     if (abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))> self.zeta:
-                        print("To aquuuuuuui")
+                        print("To aquuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui")
                         p_micro_cluster.delete_sample(sampleList[idx],idx)
                         self.newUsers.append(sampleList[idx])
 
