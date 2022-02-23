@@ -242,7 +242,10 @@ class DenStream:
                 sampleList = p_micro_cluster.getSample()
                 
                 print("gainList: ",gainList)
-                for idx in range(len(gainList)):
+                #### mudar isso par aum while
+                tam_init = len(gainList)
+                while(tam_init>idx):
+                #for idx in range(len(gainList)):
                     print("tamanhoGainList: ", len(gainList))
                     print("idx: ",idx)
                     #print("self.zeta: ", self.zeta)
@@ -250,18 +253,23 @@ class DenStream:
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
                         print("To aquuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui") 
                         p_micro_cluster.delete_sample(sampleList[idx],idx)
+                        tam_init = tam_init-1
 
                         self.newUsers.append(sampleList[idx])
+                    idx = idx +1
 
 
             for o_micro_cluster in self.o_micro_clusters:
                 gainList_outL = o_micro_cluster.getGainChannel()
 
                 sampleList = o_micro_cluster.getSample()
-
-                for idx in range(len(gainList_outL)):
-                    o_micro_cluster.delete_sample(sampleList[idx],idx)
+                tam_init = len(gainList_outL)
+                while(tam_init>idx):
                     self.newUsers.append(sampleList[idx])
+                    o_micro_cluster.delete_sample(sampleList[idx],idx)
+                    idx =idx +1
+                    tam_init =tam_init-1
+
 
 
 
