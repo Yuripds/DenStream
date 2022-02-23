@@ -241,11 +241,10 @@ class DenStream:
 
                 sampleList = p_micro_cluster.getSample()
                 
-                print("sampleList: ",sampleList)
+                print("gainList: ",gainList)
                 for idx in range(len(gainList)):
                     print("tamanhoGainList: ", len(gainList))
                     print("idx: ",idx)
-                    print("gainList: ", gainList[idx])
                     #print("self.zeta: ", self.zeta)
                     #print("abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]): ",abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
