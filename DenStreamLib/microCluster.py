@@ -31,6 +31,7 @@ class MicroCluster:
 
             # Update Ganho de canal
             gc_aux = self.gainChannel
+            print("teeeeeeeeeeeeeeeestesample: ",sample )
             gc_aux.append(sample[0])
             self.gainChannel = gc_aux
 
