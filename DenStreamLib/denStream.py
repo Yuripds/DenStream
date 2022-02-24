@@ -67,11 +67,11 @@ class DenStream:
             """
 
             X = check_array(X, dtype=np.float64, order="C")
-            print("X: ",X )
+           
             n_samples, _ = X.shape
 
             sample_weight = self._validate_sample_weight(sample_weight, n_samples)
-            print("sample_weight: ",sample_weight )
+
             # if not hasattr(self, "potential_micro_clusters"):
 
             # if n_features != :
@@ -81,7 +81,6 @@ class DenStream:
             
             indx=0
             for sample, weight in zip(X, sample_weight):
-                print("testeeeeeeeeeeeeee: ", sample)
                 self._partial_fit(sample,estimacaoGanhoCanal[indx], weight)
                 indx = indx+1
                
@@ -90,7 +89,6 @@ class DenStream:
             y_old_tempo = []
             contador = 0
             while contador<time_param:
-                #print("tempo:", self.t)
                 if self.t % 10 == 0:  
                     self.manutencao()
 
@@ -125,7 +123,7 @@ class DenStream:
             
                 y=[]
                 user_nlist = novos_users.to_numpy(dtype='float32')
-                print("user_nlist: ", user_nlist)
+
                 for i,users in enumerate(user_nlist):
                     self.newUsers.append(users)
                     self.estimacao_tempo_newUsers.append(estimacao_tempo_novosUsers[i])
@@ -133,11 +131,8 @@ class DenStream:
                 for i,users in enumerate(self.newUsers):
                     #### add estimacao_tempo_novosUsers junto a fila de novos usuários
                     nova_amostra = users
-                    print("sampleTesteeeeeeeeeeeeeeeeeee: ", users)
-                    #print("nova_amostra: ",nova_amostra[1])
                     new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                     
-                    print("estimacao_tempo_novosUsers[i]: ",self.estimacao_tempo_newUsers[i])
                     self._partial_fit(nova_amostra,self.estimacao_tempo_newUsers[i], new_sample_weight)
 
                     p_micro_cluster_centers = np.array([p_micro_cluster.center() for
@@ -164,25 +159,17 @@ class DenStream:
             
     
 
-    def _get_nearest_micro_cluster(self, sample, micro_clusters,flag=0):
+    def _get_nearest_micro_cluster(self, sample, micro_clusters):
         smallest_distance = sys.float_info.max
         nearest_micro_cluster = None
         nearest_micro_cluster_index = -1
         for i, micro_cluster in enumerate(micro_clusters):
-
             current_distance = np.linalg.norm(micro_cluster.center() - sample )
-            if flag==1:
-                print("sample", sample)
-                print("centro: ", micro_cluster.center())
-                print("current_distance: ", current_distance)
-                print("smallest_distance: ", smallest_distance)
             if current_distance < smallest_distance:
                 smallest_distance = current_distance
                 nearest_micro_cluster = micro_cluster
                 nearest_micro_cluster_index = i
-        #if flag==1:
-            #print("microCluster_escolhido: ", nearest_micro_cluster.center())
-            #print("#############################################")
+
         return nearest_micro_cluster_index, nearest_micro_cluster
 
     def _try_merge(self, sample,estimacaoGanhoCanal, weight, micro_cluster):
@@ -190,7 +177,6 @@ class DenStream:
             micro_cluster_copy = copy(micro_cluster)
             micro_cluster_copy.insert_sample(sample,estimacaoGanhoCanal, weight)
             if micro_cluster_copy.radius() <= self.eps:
-                print("microCluster_maisPróximo: ", micro_cluster.center())
                 micro_cluster.insert_sample(sample, estimacaoGanhoCanal,weight)
                 return True
         return False
@@ -245,24 +231,15 @@ class DenStream:
 
                 sampleList = p_micro_cluster.getSample()
                 
-                print("gainList: ",gainList)
                 #### mudar isso par aum while
                 tam_init = len(gainList)
                 idx=0
                 while(tam_init>idx):
-                #for idx in range(len(gainList)):
-                    print("tamanhoGainList: ", len(gainList))
-                    print("idx: ",idx)
-                    #print("self.zeta: ", self.zeta)
-                    #print("abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]): ",abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t]))
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
-                        print("To aquuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui") 
                         self.newUsers.append(sampleList[idx])
                         self.estimacao_tempo_newUsers.append(ganhoTempoList[idx])
                         p_micro_cluster.delete_sample(idx)
                         tam_init = tam_init-1
-
-                        
                     idx = idx +1
 
 

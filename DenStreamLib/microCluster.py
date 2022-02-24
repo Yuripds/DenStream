@@ -56,7 +56,7 @@ class MicroCluster:
 
 
     def delete_sample(self,index):
-        print("Essa função foi chamada")
+        
   
         # Update Ganho de canal
         self.gainChannel.pop(index)
