@@ -80,6 +80,7 @@ class DenStream:
             
             indx=0
             for sample, weight in zip(X, sample_weight):
+                print("testeeeeeeeeeeeeee: ", sample)
                 self._partial_fit(sample,estimacaoGanhoCanal[indx], weight)
                 indx = indx+1
                
@@ -130,6 +131,7 @@ class DenStream:
                 for i,users in enumerate(self.newUsers):
                     
                     nova_amostra = users
+                    print("sampleTesteeeeeeeeeeeeeeeeeee: ", users)
                     #print("nova_amostra: ",nova_amostra[1])
                     new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                     
@@ -254,7 +256,7 @@ class DenStream:
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
                         print("To aquuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui") 
                         self.newUsers.append(sampleList[idx])
-                        p_micro_cluster.delete_sample(sampleList[idx],idx)
+                        p_micro_cluster.delete_sample(idx)
                         tam_init = tam_init-1
 
                         
@@ -269,7 +271,7 @@ class DenStream:
                 idx=0
                 while(tam_init>idx):
                     self.newUsers.append(sampleList[idx])
-                    o_micro_cluster.delete_sample(sampleList[idx],idx)
+                    o_micro_cluster.delete_sample(idx)
                     idx =idx +1
                     tam_init =tam_init-1
 

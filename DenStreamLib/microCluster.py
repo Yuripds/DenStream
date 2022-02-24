@@ -29,10 +29,10 @@ class MicroCluster:
             new_variance = old_variance * ((new_sum_of_weights - weight)
                                            / old_sum_of_weights) + weight * (sample - new_mean) * (sample - old_mean)
 
+            print("sampleeeeeeeeeeeeeeeeeeeeeeeeee: ", sample)
             # Update Ganho de canal
             gc_aux = self.gainChannel
-            print("teeeeeeeeeeeeeeeestesample: ",sample )
-            gc_aux.append(sample[0])
+            gc_aux.append(abs(sample[0]))
             self.gainChannel = gc_aux
 
             # Update Ganho no tempo
@@ -50,14 +50,13 @@ class MicroCluster:
             self.variance = new_variance
             self.sum_of_weights = new_sum_of_weights
 
-            print("mean: ", self.mean)
         else:
             
             self.mean = sample
             self.sum_of_weights = weight
 
 
-    def delete_sample(self,sample,index):
+    def delete_sample(self,index):
         print("Essa função foi chamada")
   
         # Update Ganho de canal
