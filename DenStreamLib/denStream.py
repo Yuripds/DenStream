@@ -237,6 +237,8 @@ class DenStream:
                 while(tam_init>idx):
                     print("gainList[idx]: " , gainList[idx])
                     print("ganhoTempoList[idx]: " ,ganhoTempoList[idx])
+                    print("[self.t]: ", self.t)
+                    print("ganhoTempoList[idx][self.t]: " ,ganhoTempoList[idx][self.t])
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
                         self.newUsers.append(sampleList[idx])
                         self.estimacao_tempo_newUsers.append(ganhoTempoList[idx])
