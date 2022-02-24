@@ -128,7 +128,7 @@ class DenStream:
                     self.newUsers.append(users)
                 
                 for i,users in enumerate(self.newUsers):
-                    
+                    print("user: ", users)
                     nova_amostra = users[1]
                     #print("nova_amostra: ",nova_amostra[1])
                     new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
