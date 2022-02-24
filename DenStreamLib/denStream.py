@@ -130,13 +130,13 @@ class DenStream:
                     self.newUsers.append(users)
                 
                 for i,users in enumerate(self.newUsers):
-                    
+                    #### add estimacao_tempo_novosUsers junto a fila de novos usuários
                     nova_amostra = users
                     print("sampleTesteeeeeeeeeeeeeeeeeee: ", users)
                     #print("nova_amostra: ",nova_amostra[1])
                     new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                     
-                    print("estimacao_tempo_novosUsers[i]: ",estimacao_tempo_novosUsers[i])
+                    print("estimacao_tempo_novosUsers[i]: ",estimacao_tempo_novosUsers)
                     self._partial_fit(nova_amostra,estimacao_tempo_novosUsers[i], new_sample_weight)
 
                     p_micro_cluster_centers = np.array([p_micro_cluster.center() for
