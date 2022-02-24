@@ -155,7 +155,7 @@ class DenStream:
 
                     y.append(dbscan.labels_[index])
 
-                return y, y_old
+                return  y_old_tempo , y
 
             else:
                 return y_old_tempo
