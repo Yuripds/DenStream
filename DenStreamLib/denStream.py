@@ -49,6 +49,7 @@ class DenStream:
         self.o_micro_clusters = []
         self.zeta = zeta
         self.newUsers = []
+        self.estimacao_tempo_newUsers = []
 
         if lambd > 0:
             self.tp = ceil((1 / lambd) * np.log((beta * mu) / (beta * mu - 1)))
@@ -125,9 +126,9 @@ class DenStream:
                 y=[]
                 user_nlist = novos_users.to_numpy(dtype='float32')
                 print("user_nlist: ", user_nlist)
-                for users in enumerate(user_nlist):
-                    #print("novos_users: ",novos_users.to_numpy(dtype='float32'))
+                for i,users in enumerate(user_nlist):
                     self.newUsers.append(users)
+                    self.estimacao_tempo_newUsers.append(estimacao_tempo_novosUsers[i])
                 
                 for i,users in enumerate(self.newUsers):
                     #### add estimacao_tempo_novosUsers junto a fila de novos usuários
@@ -136,8 +137,8 @@ class DenStream:
                     #print("nova_amostra: ",nova_amostra[1])
                     new_sample_weight = np.ones(1, dtype=np.float32, order='C')[0]
                     
-                    print("estimacao_tempo_novosUsers[i]: ",estimacao_tempo_novosUsers)
-                    self._partial_fit(nova_amostra,estimacao_tempo_novosUsers[i], new_sample_weight)
+                    print("estimacao_tempo_novosUsers[i]: ",self.estimacao_tempo_newUsers[i])
+                    self._partial_fit(nova_amostra,self.estimacao_tempo_newUsers[i], new_sample_weight)
 
                     p_micro_cluster_centers = np.array([p_micro_cluster.center() for
                                                         p_micro_cluster in
@@ -257,6 +258,7 @@ class DenStream:
                     if (abs(abs(gainList[idx]) - abs(ganhoTempoList[idx][self.t])))> self.zeta:
                         print("To aquuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuui") 
                         self.newUsers.append(sampleList[idx])
+                        self.estimacao_tempo_newUsers.append(ganhoTempoList[idx])
                         p_micro_cluster.delete_sample(idx)
                         tam_init = tam_init-1
 
@@ -266,12 +268,13 @@ class DenStream:
 
             for o_micro_cluster in self.o_micro_clusters:
                 gainList_outL = o_micro_cluster.getGainChannel()
-
+                ganhoTempoList_out = o_micro_cluster.getGanhoTempo()
                 sampleList = o_micro_cluster.getSample()
                 tam_init = len(gainList_outL)
                 idx=0
                 while(tam_init>idx):
                     self.newUsers.append(sampleList[idx])
+                    self.estimacao_tempo_newUsers.append(ganhoTempoList_out[idx])
                     o_micro_cluster.delete_sample(idx)
                     idx =idx +1
                     tam_init =tam_init-1
