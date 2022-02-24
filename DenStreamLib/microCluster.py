@@ -29,10 +29,9 @@ class MicroCluster:
             new_variance = old_variance * ((new_sum_of_weights - weight)
                                            / old_sum_of_weights) + weight * (sample - new_mean) * (sample - old_mean)
 
-            print("sampleeeeeeeeeeeeeeeeeeeeeeeeeeABS: ", abs(sample))
             # Update Ganho de canal
             gc_aux = self.gainChannel
-            gc_aux.append(abs(sample[0]))
+            gc_aux.append(sample[0])
             self.gainChannel = gc_aux
 
             # Update Ganho no tempo
@@ -43,7 +42,7 @@ class MicroCluster:
 
             # Update sample list
             sample_aux = self.sampleList
-            sample_aux.append(sample[0])
+            sample_aux.append(sample)
             self.sampleList = sample_aux
 
             self.mean = new_mean
