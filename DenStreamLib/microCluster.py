@@ -14,6 +14,21 @@ class MicroCluster:
         self.sampleList = []
 
     def insert_sample(self, sample,estimacaoGanhoCanal, weight):
+        # Update Ganho de canal
+        gc_aux = self.gainChannel
+        gc_aux.append(sample[0])
+        self.gainChannel = gc_aux
+
+        # Update Ganho no tempo
+
+        gt_aux = self.ganhoTempo
+        gt_aux.append(estimacaoGanhoCanal)
+        self.ganhoTempo= gt_aux
+
+        # Update sample list
+        sample_aux = self.sampleList
+        sample_aux.append(sample)
+        self.sampleList = sample_aux
 
         if self.sum_of_weights != 0:
             # Update sum of weights
@@ -29,34 +44,20 @@ class MicroCluster:
             new_variance = old_variance * ((new_sum_of_weights - weight)
                                            / old_sum_of_weights) + weight * (sample - new_mean) * (sample - old_mean)
 
-            # Update Ganho de canal
-            gc_aux = self.gainChannel
-            gc_aux.append(sample[0])
-            self.gainChannel = gc_aux
 
-            # Update Ganho no tempo
-
-            gt_aux = self.ganhoTempo
-            gt_aux.append(estimacaoGanhoCanal)
-            self.ganhoTempo= gt_aux
-
-            # Update sample list
-            sample_aux = self.sampleList
-            sample_aux.append(sample)
-            self.sampleList = sample_aux
 
             self.mean = new_mean
             self.variance = new_variance
             self.sum_of_weights = new_sum_of_weights
 
         else:
-            
+
             self.mean = sample
             self.sum_of_weights = weight
 
 
     def delete_sample(self,index):
-        
+        print("Deletooooooooou")
   
         # Update Ganho de canal
         self.gainChannel.pop(index)
